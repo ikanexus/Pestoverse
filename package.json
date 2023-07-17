@@ -30,6 +30,7 @@
     "leaflet": "^1.9.4",
     "nuxt": "^3.6.2",
     "nuxt-icon": "^0.4.2",
+    "nuxt-og-image": "^2.0.10",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "typescript": "^5.1.6"

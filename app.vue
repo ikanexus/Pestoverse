@@ -39,6 +39,12 @@ useHead({
   ],
 });
 
+defineOgImage({
+  component: 'template',
+  title: 'Pestoverse',
+  description: "The official website for running, upcoming and archived events created by Yuniiho's community!",
+});
+
 onMounted(() => {
   loading.value = false;
 });
