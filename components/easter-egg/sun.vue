@@ -31,8 +31,8 @@ const gradient = computed((gradient) => {
 });
 </script>
 <template>
-    <NuxtLink to="/map" class="h-48 w-48 text-center transition-all duration-300 hover:scale-105">
-        <div class="fixed h-48 w-48 animate-[sunfire_4s_infinite_alternate] rounded-full bg-gradient-radial" :style="gradient"></div>
+    <NuxtLink to="/map" class="fixed h-48 w-48 -ml-24 -mt-24 transition-all text-center duration-300 hover:scale-105 top-1/2 left-1/2">
+        <div class="fixed top-1/2 left-1/2 -ml-24 -mt-24 h-48 w-48 animate-[sunfire_4s_infinite_alternate] rounded-full bg-gradient-radial" :style="gradient"></div>
         <div class="relative top-1/2 -mt-2">Start exploring!</div>
     </NuxtLink>
 </template>

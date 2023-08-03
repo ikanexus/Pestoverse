@@ -23,6 +23,7 @@ export default {
             zIndex: {
                 500: "500",
             },
+
             keyframes: (theme) => ({
                 scalein: {
                     "0%": { transform: "scale(1.0)" },
@@ -32,14 +33,20 @@ export default {
                     from: { boxShadow: "0 0 50px var(--tw-gradient-to-color)" },
                     to: { boxShadow: "0 0 100px var(--tw-gradient-from-color)" },
                 },
-                rotation: {
-                    from: { transform: "rotate(0)" },
-                    to: { transform: "rotate(360deg)" },
-                },
+                orbit: {
+                    from: { transform: "rotate(var(--start-rotation))" },
+                    to: { transform: "rotate(calc(var(--start-rotation) + 360deg))" },
+                }
             }),
+
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
             },
+
+            animation: {
+                'spin-slow': 'spin 60s linear infinite',
+                'orbit': 'orbit var(--rotation-speed) infinite linear'
+            }
         },
     },
 } satisfies Config;
