@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {randomInt} from "crypto";
 
 const appConfig = useAppConfig();
 const colorMode = useColorMode();
@@ -96,9 +95,8 @@ addPlanets(3);
     <div class="md:128 md:h-128 -mt-4 lg:mt-12">
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
             :viewBox="`0 0 ${width} ${height}`"
-            class="w-full h-128"
+            class="w-screen h-128"
             role="img"
             aria-labelledby="solarSystemTitle"
             aria-describedby="solarSystemDescription"
@@ -117,7 +115,7 @@ addPlanets(3);
             </NuxtLink>
 
             <!-- Planets -->
-            <g v-for="planet in planets" class="hidden md:block">
+            <g v-for="planet in planets">
                 <circle :cx="planet.orbit.cx" :cy="planet.orbit.cy" :r="planet.orbit.distance" stroke="#ccc" fill="none" />
                 <NuxtLink to="/test">
                     <circle :cx="planet.planet.cx" :cy="planet.planet.cy" :r="planet.planet.size" :fill="planet.planet.fill" class="animate-orbit origin-center hover:[animation-play-state:_paused]" :style="{'--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms`}" />
