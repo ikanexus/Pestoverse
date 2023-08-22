@@ -36,7 +36,7 @@ export default {
                 orbit: {
                     from: { transform: "rotate(var(--start-rotation))" },
                     to: { transform: "rotate(calc(var(--start-rotation) + 360deg))" },
-                }
+                },
             }),
 
             backgroundImage: {
@@ -44,9 +44,9 @@ export default {
             },
 
             animation: {
-                'spin-slow': 'spin 60s linear infinite',
-                'orbit': 'orbit var(--rotation-speed) infinite linear'
-            }
+                "spin-slow": "spin 60s linear infinite",
+                orbit: "orbit var(--rotation-speed) infinite linear",
+            },
         },
     },
 } satisfies Config;
