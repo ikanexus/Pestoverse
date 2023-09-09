@@ -4,7 +4,7 @@ const colorMode = useColorMode();
 const primary = computed(() => appConfig.ui.primary);
 const allColors = Object(COLORS);
 
-const navItems = NAV_MENU.flatMap((value) => value).filter((value) => 'planet' in value ? value.planet : false);
+const navItems = NAV_MENU.flatMap((value) => value).filter((value) => ("planet" in value ? value.planet : false));
 
 const getColorPreference = (preference: string) => {
     switch (preference) {
@@ -58,6 +58,7 @@ const planets = ref(
         to?: string;
         click?: () => void;
         label: string;
+        icon: string;
         planet: {
             cx: number;
             cy: number;
@@ -91,6 +92,7 @@ const addPlanets = () => {
         }
         planets.value.push({
             ...link,
+            icon: item.icon,
             label: item.label,
             planet: {
                 cx: width / 2 + orbitDistance,
@@ -107,6 +109,13 @@ const addPlanets = () => {
         });
         orbitDistance += randomNumber(100, 120);
     });
+};
+
+const setLabel = (label?: string) => {
+    if (!label) {
+        label = defaultSunText;
+    }
+    sunText.value = label;
 };
 
 addPlanets();
@@ -132,15 +141,17 @@ addPlanets();
                     <stop offset="0%" :stop-color="darkColor" />
                     <stop offset="100%" :stop-color="lightColor" stop-opacity="0.1" />
                 </radialGradient>
-                <radialGradient id="planetGradient">
-                    <stop offset="0%" :stop-color="darkColor" />
-                    <stop offset="100%" :stop-color="lightColor" />
+                <radialGradient id="planetShadow">
+                    <stop offset="0%" stop-color="hsla(0, 0%, 0%, 0)" />
+                    <stop offset="90%" stop-color="hsla(0, 0%, 1)" />
                 </radialGradient>
             </defs>
 
             <filter id="sunGlowBlur">
                 <feGaussianBlur stdDeviation="20" />
             </filter>
+
+
 
             <!-- Sun -->
             <circle :cx="sun.cx" :cy="sun.cy" :r="sun.size + 20" fill="url(#sunGlowGradient)" filter="url(#sunGlowBlur)">
@@ -155,26 +166,29 @@ addPlanets();
             <!-- Planets -->
             <g v-for="(planet, index) in planets">
                 <circle :id="`orbit-${index}`" :cx="planet.orbit.cx" :cy="planet.orbit.cy" :r="planet.orbit.distance" stroke="#ccc" fill="none" />
-                <NuxtLink v-if="planet.to" :to="planet.to" @mouseover="sunText = planet.label" @mouseout="sunText = defaultSunText" :id="`planet-${index}`" class="origin-center animate-orbit hover:[animation-play-state:_paused]" :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }">
+                <EasterEggPlanet
+                    :to="planet.to"
+                    :index="index"
+                    :click="planet.click"
+                    @mouseover="setLabel(planet.label)"
+                    @mouseout="setLabel()"
+                    class="origin-center animate-orbit hover:[animation-play-state:_paused]"
+                    :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }"
+                >
+                    <filter :id="`planetTexture-${index}`">
+                        <feTurbulence baseFrequency="0.04 0.01" numoctaves="2" :seed="index"/>
+                        <feDiffuseLighting :lighting-color="darkColor" surfaceScale="8">
+                            <feDistantLight azimuth="45" elevation="60"></feDistantLight>
+                        </feDiffuseLighting>
+                        <feComposite operator="in" in2="SourceGraphic"/>
+                    </filter>
+                    <clipPath :id="`planetClip-${index}`">
+                       <circle :cx="planet.planet.cx" :cy="planet.planet.cy" :r="planet.planet.size" />
+                    </clipPath>
                     <title v-text="planet.label"></title>
-                    <circle
-                        :cx="planet.planet.cx"
-                        :cy="planet.planet.cy"
-                        :r="planet.planet.size"
-                        :fill="darkColor"
-                    />
-                </NuxtLink>
-                <g v-if="planet.click" @click="planet.click" @mouseover="sunText = planet.label" @mouseout="sunText = defaultSunText" role="button" :id="`planet-${index}`" class="origin-center animate-orbit hover:[animation-play-state:_paused]"
-                   :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }">
-                    <title v-text="planet.label"></title>
-                    <circle
-                        :cx="planet.planet.cx"
-                        :cy="planet.planet.cy"
-                        :r="planet.planet.size"
-                        :fill="darkColor"
-                        filter="url(#planetTexture)"
-                    />
-                </g>
+                    <circle :cx="planet.planet.cx" :cy="planet.planet.cy" :r="planet.planet.size" :fill="darkColor" :filter="`url(#planetTexture-${index})`" />
+                    <circle :cx="planet.planet.cx" :cy="planet.planet.cy" :r="planet.planet.size * 2" fill="url(#planetShadow)" :clip-path="`url(#planetClip-${index})`"/>
+                </EasterEggPlanet>
             </g>
         </svg>
     </div>
