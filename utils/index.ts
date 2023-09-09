@@ -37,6 +37,7 @@ export const NAV_MENU = [
             label: "Home",
             icon: "i-heroicons-home-solid",
             to: "/",
+            planet: false,
         },
     ],
     [
@@ -44,11 +45,13 @@ export const NAV_MENU = [
             label: "Pesto Around the World",
             icon: "i-heroicons-map-solid",
             to: "/map",
+            planet: false,
         },
         {
             label: "Pesto Gallery",
             icon: "i-heroicons-photo-solid",
             to: "/gallery",
+            planet: true,
         },
         {
             label: "Kudo Boards",
@@ -57,6 +60,7 @@ export const NAV_MENU = [
                 const state = useState("kudo-slideover");
                 state.value = true;
             },
+            planet: true,
         },
     ],
     [
@@ -64,6 +68,7 @@ export const NAV_MENU = [
             label: "Credits",
             icon: "i-mdi-handshake",
             to: "/credits",
+            planet: true,
         },
     ],
 ];

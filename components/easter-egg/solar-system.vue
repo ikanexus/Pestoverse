@@ -4,7 +4,7 @@ const colorMode = useColorMode();
 const primary = computed(() => appConfig.ui.primary);
 const allColors = Object(COLORS);
 
-const navItems = NAV_MENU.flatMap((value) => value).filter((value) => !["Pesto Around the World", "Home"].includes(value.label));
+const navItems = NAV_MENU.flatMap((value) => value).filter((value) => 'planet' in value ? value.planet : false);
 
 const getColorPreference = (preference: string) => {
     switch (preference) {
@@ -72,6 +72,8 @@ const planets = ref(
         };
     }[],
 );
+const defaultSunText = "Start Exploring!";
+const sunText = ref(defaultSunText);
 
 const randomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -147,24 +149,22 @@ addPlanets();
             <NuxtLink to="/map" class="origin-center transition-all duration-300 hover:scale-105">
                 <title>Start Exploring the Pestoverse</title>
                 <circle :cx="sun.cx" :cy="sun.cy" :r="sun.size" fill="url(#sunGradient)" />
-                <text :x="sun.cx" :y="sun.cy + 12" text-anchor="middle" class="text-4xl dark:fill-white">Start Exploring!</text>
+                <text :x="sun.cx" :y="sun.cy + 12" text-anchor="middle" class="text-4xl dark:fill-white" v-text="sunText"></text>
             </NuxtLink>
 
             <!-- Planets -->
             <g v-for="(planet, index) in planets">
                 <circle :id="`orbit-${index}`" :cx="planet.orbit.cx" :cy="planet.orbit.cy" :r="planet.orbit.distance" stroke="#ccc" fill="none" />
-                <NuxtLink v-if="planet.to" :to="planet.to" :id="`planet-${index}`" >
+                <NuxtLink v-if="planet.to" :to="planet.to" @mouseover="sunText = planet.label" @mouseout="sunText = defaultSunText" :id="`planet-${index}`" class="origin-center animate-orbit hover:[animation-play-state:_paused]" :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }">
                     <title v-text="planet.label"></title>
                     <circle
                         :cx="planet.planet.cx"
                         :cy="planet.planet.cy"
                         :r="planet.planet.size"
                         :fill="darkColor"
-                        class="origin-center animate-orbit hover:[animation-play-state:_paused]"
-                        :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }"
                     />
                 </NuxtLink>
-                <g v-if="planet.click" @click="planet.click" role="button" :id="`planet-${index}`" class="origin-center animate-orbit hover:[animation-play-state:_paused]"
+                <g v-if="planet.click" @click="planet.click" @mouseover="sunText = planet.label" @mouseout="sunText = defaultSunText" role="button" :id="`planet-${index}`" class="origin-center animate-orbit hover:[animation-play-state:_paused]"
                    :style="{ '--start-rotation': `${planet.planet.rotationStart}deg`, '--rotation-speed': `${planet.planet.rotationSpeed}ms` }">
                     <title v-text="planet.label"></title>
                     <circle
