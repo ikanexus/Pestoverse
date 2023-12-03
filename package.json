@@ -17,11 +17,9 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
         "pretty": "prettier --write \"./**/*.{ts,vue}\"",
-        "updateimages": "node update_image_sizes.mjs",
-        "wrangler:dev": "wrangler pages dev -- nuxt dev"
+        "updateimages": "node update_image_sizes.mjs"
     },
     "devDependencies": {
-        "@cloudflare/workers-types": "^4.20231121.0",
         "@iconify-json/line-md": "^1.1.25",
         "@iconify-json/mdi": "^1.1.52",
         "@nuxt/content": "^2.7.0",
@@ -43,8 +41,7 @@
         "prettier": "^3.0.0",
         "prettier-plugin-tailwindcss": "^0.4.1",
         "sync-request": "^6.1.0",
-        "typescript": "^5.1.6",
-        "wrangler": "^3.18.0"
+        "typescript": "^5.1.6"
     },
     "packageManager": "yarn@3.6.1"
 }
