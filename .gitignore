@@ -24,6 +24,7 @@ logs
 .env
 .env.*
 !.env.example
+.dev.vars
 
 # Yarn Berry
 .yarn/*
@@ -33,3 +34,5 @@ logs
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.wrangler/
