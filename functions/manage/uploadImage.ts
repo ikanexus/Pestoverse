@@ -10,6 +10,7 @@ export const onRequestPost: PagesFunction<Env> = async (context): Promise<Respon
         type: file.type,
         size: file.size,
     };
+    console.log(JSON.stringify(data));
 
     return new Response(JSON.stringify(data));
 };
