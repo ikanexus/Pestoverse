@@ -1,0 +1,4 @@
+[[services]]
+binding = "IMAGES"
+service = "pestoverse-images"
+environment = "preview"

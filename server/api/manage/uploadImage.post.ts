@@ -43,15 +43,23 @@ const resizeImage = async (file: Buffer, tinifyToken: string): Promise<ImageResu
     return { shrunk: Buffer.from(shrunkImage), placeholder: Buffer.from(placeholderImage), original: file, width, height };
 };
 
+const uploadImages = async (data: ImageResult, bucket: any, name: string) => {
+    await bucket.put(`full/${name}`, data.original);
+    await bucket.put(`shrunk/${name}`, data.shrunk);
+    await bucket.put(`placeholder/${name}`, data.placeholder);
+};
+
 export default defineEventHandler(async (event) => {
     const runtimeConfig = useRuntimeConfig(event);
     const formData = await readMultipartFormData(event);
     if (formData) {
         const file = formData[0];
-        // const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
-        // const { shrunk, placeholder, original, width, height } = result;
-        // console.log("width", width, "height", height);
-        // return Buffer.from(placeholder);
+        const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
+        const name = "test-1.jpg";
+        const { width, height } = result;
+        console.log("width", width, "height", height);
+        await uploadImages(result, event.context.cloudflare.env.IMAGES, name);
+        return { success: true, width, height };
     }
     return {};
 });
