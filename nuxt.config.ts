@@ -43,10 +43,6 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {
-        cfImages: {
-            accountHash: "",
-            accountId: "",
-            apiKey: "",
-        },
+        tinifyToken: "",
     },
 });
