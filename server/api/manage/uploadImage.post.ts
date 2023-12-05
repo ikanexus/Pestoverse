@@ -54,12 +54,12 @@ export default defineEventHandler(async (event) => {
     const formData = await readMultipartFormData(event);
     if (formData) {
         const file = formData[0];
-        const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
-        const name = "test-1.jpg";
-        const { width, height } = result;
-        console.log("width", width, "height", height);
-        await uploadImages(result, event.context.cloudflare.env.IMAGES, name);
-        return { success: true, width, height };
+        // const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
+        // const name = "test-1.jpg";
+        // const { width, height } = result;
+        // console.log("width", width, "height", height);
+        // await uploadImages(result, event.context.cloudflare.env.IMAGES, name);
+        // return { success: true, width, height };
     }
     return {};
 });
