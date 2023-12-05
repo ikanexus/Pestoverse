@@ -48,10 +48,10 @@ export default defineEventHandler(async (event) => {
     const formData = await readMultipartFormData(event);
     if (formData) {
         const file = formData[0];
-        const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
-        const { shrunk, placeholder, original, width, height } = result;
-        console.log("width", width, "height", height);
-        return Buffer.from(placeholder);
+        // const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
+        // const { shrunk, placeholder, original, width, height } = result;
+        // console.log("width", width, "height", height);
+        // return Buffer.from(placeholder);
     }
     return {};
 });

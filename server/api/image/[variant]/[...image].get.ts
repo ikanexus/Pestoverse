@@ -4,7 +4,8 @@ export default defineEventHandler(async (event) => {
 
     const obj = await event.context.cloudflare.env.IMAGES.get(`${variant}/${imageName}`);
     if (obj === null) {
-        return new Response("Not found", { status: 404 });
+        throw createError({ statusCode: 404, statusMessage: "Image not found" });
     }
+    console.log(obj);
     return Buffer.from(obj);
 });
