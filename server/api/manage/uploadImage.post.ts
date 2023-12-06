@@ -1,3 +1,10 @@
+import decodeJpeg, { init as initJpegWasm } from "@jsquash/jpeg/decode";
+import decodePng, { init as initPngWasm } from "@jsquash/png/decode";
+import encodeWebp, { init as initWebpWasm } from "@jsquash/webp/encode";
+import resize, { initResize } from "@jsquash/resize";
+
+const SUPPORTED_FILETYPES = ["image/jpeg", "image/png"];
+
 type ImageResult = {
     placeholder: Buffer;
     shrunk: Buffer;
@@ -6,7 +13,7 @@ type ImageResult = {
     height: number;
 };
 
-const resizeImage = async (file: Buffer, tinifyToken: string): Promise<ImageResult> => {
+const resizeImage = async (file: Buffer): Promise<ImageResult> => {
     const headers = {
         Authorization: `Basic ${Buffer.from(`api:${tinifyToken}`).toString("base64")}`,
         "Content-Type": "application/json",
@@ -43,6 +50,30 @@ const resizeImage = async (file: Buffer, tinifyToken: string): Promise<ImageResu
     return { shrunk: Buffer.from(shrunkImage), placeholder: Buffer.from(placeholderImage), original: file, width, height };
 };
 
+const toArrayBuffer = (buf: Buffer) => {
+    const ab = new ArrayBuffer(buf.length);
+    const view = new Uint8Array(ab);
+    for (let i = 0; i < buf.length; ++i) {
+        view[i] = buf[i];
+    }
+    return ab;
+};
+
+const decodeImage = async (fileType: string, buffer: ArrayBuffer): Promise<ImageData> => {
+    console.log(buffer);
+    if (fileType === "image/jpeg") {
+        await initJpegWasm(JPEG_DEC_WASM);
+        const data = await decodeJpeg(buffer);
+        return data;
+    } else if (fileType === "image/png") {
+        await initPngWasm(PNG_DEC_WASM);
+        const data = await decodePng(buffer);
+        return data;
+    }
+
+    throw createError({ statusCode: 500, statusMessage: "Can't decode image" });
+};
+
 const uploadImages = async (data: ImageResult, bucket: any, name: string) => {
     await bucket.put(`full/${name}`, data.original);
     await bucket.put(`shrunk/${name}`, data.shrunk);
@@ -50,10 +81,17 @@ const uploadImages = async (data: ImageResult, bucket: any, name: string) => {
 };
 
 export default defineEventHandler(async (event) => {
-    const runtimeConfig = useRuntimeConfig(event);
     const formData = await readMultipartFormData(event);
     if (formData) {
         const file = formData[0];
+        const fileType = file.type || "";
+        if (!SUPPORTED_FILETYPES.includes(fileType)) {
+            throw createError({ statusCode: 400, statusMessage: "File type not supported" });
+        }
+        const fileData = toArrayBuffer(file.data);
+        const imageData = await decodeImage(fileType, fileData);
+
+        console.log("imageData", imageData);
         // const result = await resizeImage(file.data, runtimeConfig.tinifyToken);
         // const name = "test-1.jpg";
         // const { width, height } = result;

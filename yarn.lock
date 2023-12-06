@@ -484,6 +484,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cloudflare/kv-asset-handler@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@cloudflare/kv-asset-handler@npm:0.2.0"
+  dependencies:
+    mime: ^3.0.0
+  checksum: bc6a02a9c80be6de90e46454ef4de09301e68726eaa4835de0e30216e50fffcc5612274a17dfb455916cf3418f0cb25fefd2b561a9d2282f4cc10d40527f0acb
+  languageName: node
+  linkType: hard
+
 "@cloudflare/kv-asset-handler@npm:^0.3.0":
   version: 0.3.0
   resolution: "@cloudflare/kv-asset-handler@npm:0.3.0"
@@ -1108,6 +1117,36 @@ __metadata:
     "@jridgewell/resolve-uri": 3.1.0
     "@jridgewell/sourcemap-codec": 1.4.14
   checksum: 0572669f855260808c16fe8f78f5f1b4356463b11d3f2c7c0b5580c8ba1cbf4ae53efe9f627595830856e57dbac2325ac17eb0c3dd0ec42102e6f227cc289c02
+  languageName: node
+  linkType: hard
+
+"@jsquash/jpeg@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@jsquash/jpeg@npm:1.4.0"
+  checksum: c40c12133b405587e4163baebb31dda25736d06796c1ab0210c1720a76cd320cb0e7ffd2d57a8cc708691eaa756f70efee065f243393c19290969de6b62b0015
+  languageName: node
+  linkType: hard
+
+"@jsquash/png@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@jsquash/png@npm:2.2.0"
+  checksum: 2ea2860cab8b4991d3361de9e3f5adf74808a843b2ceecaa20500fac541c57e30c9947e0766868b016b25f68771b87f32d2527e5a42b4dca5dbf445c95b57eb0
+  languageName: node
+  linkType: hard
+
+"@jsquash/resize@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@jsquash/resize@npm:1.1.1"
+  checksum: db10d04041fb6481a789c0aa1f8c9197f3289eed77dc149857f9939bd3290d645de65a0104db7b648f8dd4d667b6f0264a39abf5aa2dd8fb8ec64997b57ee341
+  languageName: node
+  linkType: hard
+
+"@jsquash/webp@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@jsquash/webp@npm:1.4.0"
+  dependencies:
+    wasm-feature-detect: ^1.2.11
+  checksum: a72c3073741cb80b4dca4e1fb31aa85407baf54c360938e0e516bdd5504a58ebf20e081529bb43245fbcd33b86c9c5f1c0e80e3946fa4ae3c683c024f5ebf206
   languageName: node
   linkType: hard
 
@@ -4322,6 +4361,13 @@ __metadata:
   version: 2.0.1
   resolution: "detect-libc@npm:2.0.1"
   checksum: ccb05fcabbb555beb544d48080179c18523a343face9ee4e1a86605a8715b4169f94d663c21a03c310ac824592f2ba9a5270218819bb411ad7be578a527593d7
+  languageName: node
+  linkType: hard
+
+"detect-libc@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "detect-libc@npm:2.0.2"
+  checksum: 2b2cd3649b83d576f4be7cc37eb3b1815c79969c8b1a03a40a4d55d83bc74d010753485753448eacb98784abf22f7dbd3911fd3b60e29fda28fed2d1a997944d
   languageName: node
   linkType: hard
 
@@ -8901,6 +8947,10 @@ __metadata:
     "@cloudflare/workers-types": ^4.20231121.0
     "@iconify-json/line-md": ^1.1.25
     "@iconify-json/mdi": ^1.1.52
+    "@jsquash/jpeg": ^1.4.0
+    "@jsquash/png": ^2.2.0
+    "@jsquash/resize": ^1.1.1
+    "@jsquash/webp": ^1.4.0
     "@nuxt/content": ^2.7.0
     "@nuxt/devtools": latest
     "@nuxt/image": rc
@@ -10377,7 +10427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.0, semver@npm:^7.5.3":
+"semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.0, semver@npm:^7.5.3, semver@npm:^7.5.4":
   version: 7.5.4
   resolution: "semver@npm:7.5.4"
   dependencies:
@@ -12252,6 +12302,13 @@ __metadata:
   bin:
     wait-on: bin/wait-on
   checksum: 1e8a17d8ee6436f71d3ab82781ce31267481fcd7bbccde49b0f8124871e6e40a1acac3401f04f775ba6203853a5813352fa131620fc139914351f3b2894d573f
+  languageName: node
+  linkType: hard
+
+"wasm-feature-detect@npm:^1.2.11":
+  version: 1.6.1
+  resolution: "wasm-feature-detect@npm:1.6.1"
+  checksum: 63bb5522f2cc2e1a35b1c287212e7eadc1311d853c9ff34497b887aa39389b07e63ca4ee2d6899678392303f08c6d178e5ee4f718d1989beb574f3fa69ab8b97
   languageName: node
   linkType: hard
 
