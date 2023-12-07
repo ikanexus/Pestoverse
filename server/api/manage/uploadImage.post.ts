@@ -2,7 +2,6 @@ import decodeJpeg, { init as initJpegWasm } from "@jsquash/jpeg/decode";
 import decodePng, { init as initPngWasm } from "@jsquash/png/decode";
 import encodeWebp, { init as initWebpWasm } from "@jsquash/webp/encode";
 import resize, { initResize } from "@jsquash/resize";
-
 const SUPPORTED_FILETYPES = ["image/jpeg", "image/png"];
 
 type ImageResult = {
@@ -14,6 +13,8 @@ type ImageResult = {
 };
 
 const resizeImage = async (file: Buffer): Promise<ImageResult> => {
+    const webpEncWasm = await loadWasmInstance(() => import("@jsquash/webp/codec/enc/webp_enc_simd.wasm"));
+    const resizeWasm = await loadWasmInstance(() => import("@jsquash/resize/lib/resize/squoosh_resize_bg.wasm"));
     const headers = {
         Authorization: `Basic ${Buffer.from(`api:${tinifyToken}`).toString("base64")}`,
         "Content-Type": "application/json",
@@ -60,13 +61,15 @@ const toArrayBuffer = (buf: Buffer) => {
 };
 
 const decodeImage = async (fileType: string, buffer: ArrayBuffer): Promise<ImageData> => {
+    const jpegDecWasm = await loadWasmInstance(() => import("@jsquash/jpeg/codec/dec/mozjpeg_dec.wasm"));
+    const pngDecWasm = await loadWasmInstance(() => import("@jsquash/png/codec/squoosh_png_bg.wasm"));
     console.log(buffer);
     if (fileType === "image/jpeg") {
-        await initJpegWasm(JPEG_DEC_WASM);
+        await initJpegWasm(jpegDecWasm);
         const data = await decodeJpeg(buffer);
         return data;
     } else if (fileType === "image/png") {
-        await initPngWasm(PNG_DEC_WASM);
+        await initPngWasm(pngDecWasm);
         const data = await decodePng(buffer);
         return data;
     }
@@ -78,6 +81,12 @@ const uploadImages = async (data: ImageResult, bucket: any, name: string) => {
     await bucket.put(`full/${name}`, data.original);
     await bucket.put(`shrunk/${name}`, data.shrunk);
     await bucket.put(`placeholder/${name}`, data.placeholder);
+};
+
+const loadWasmInstance = async (importFn: () => Promise<WebAssembly.Module>, imports = {}) => {
+    const init = await importFn().then((wasm) => wasm.default || wasm);
+    const { instance } = await init(imports);
+    return instance;
 };
 
 export default defineEventHandler(async (event) => {
