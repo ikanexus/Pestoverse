@@ -49,4 +49,9 @@ export default defineNuxtConfig({
             exclude: ["@jsquash/png", "@jsquash/jpeg", "@jsquash/webp", "@jsquash/resize"],
         },
     },
+    nitro: {
+        experimental: {
+            wasm: true,
+        },
+    },
 });
