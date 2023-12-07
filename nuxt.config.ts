@@ -41,20 +41,4 @@ export default defineNuxtConfig({
             Poppins: [400, 500, 600, 700],
         },
     },
-    build: {
-        extend(config, { isDev, isClient }) {},
-    },
-    // build: {
-    //     transpile: ["@jsquash/png", "@jsquash/jpeg", "@jsquash/webp", "@jsquash/resize"],
-    // },
-    // vite: {
-    //     optimizeDeps: {
-    //         exclude: ["@jsquash/png", "@jsquash/jpeg", "@jsquash/webp", "@jsquash/resize"],
-    //     },
-    // },
-    nitro: {
-        experimental: {
-            wasm: true,
-        },
-    },
 });
