@@ -7003,6 +7003,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jimp-compact@npm:^0.16.1-2":
+  version: 0.16.1
+  resolution: "jimp-compact@npm:0.16.1"
+  checksum: 5a1c62d70881b31f79ea65fecfe03617be0eb56139bc451f37e8972365c99ac3b52c5176c446ff27144c98ab664a99107ae08d347044e94e1de637f165b41a57
+  languageName: node
+  linkType: hard
+
 "jimp@npm:^0.22.10":
   version: 0.22.10
   resolution: "jimp@npm:0.22.10"
@@ -9536,6 +9543,7 @@ __metadata:
     canvas-confetti: ^1.6.0
     haversine: ^1.1.1
     jimp: ^0.22.10
+    jimp-compact: ^0.16.1-2
     js-yaml: ^4.1.0
     maplibre-gl: ^3.3.0
     nuxt: ^3.6.2

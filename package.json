@@ -36,6 +36,7 @@
         "canvas-confetti": "^1.6.0",
         "haversine": "^1.1.1",
         "jimp": "^0.22.10",
+        "jimp-compact": "^0.16.1-2",
         "js-yaml": "^4.1.0",
         "maplibre-gl": "^3.3.0",
         "nuxt": "^3.6.2",

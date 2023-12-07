@@ -1,4 +1,4 @@
-import Jimp from "jimp";
+import Jimp from "jimp-compact";
 
 const SUPPORTED_FILETYPES = ["image/jpeg", "image/png"];
 
